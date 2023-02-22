@@ -1,0 +1,99 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+}
+
+group = 'io.github.mschout'
+
+dependencies {
+    implementation 'io.github.mschout:epp-rtk-java:0.9.11'
+    implementation 'xerces:xercesImpl:2.4.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    testImplementation 'io.hosuaby:inject-resources-core:0.3.2'
+    testImplementation 'io.hosuaby:inject-resources-junit-jupiter:0.3.2'
+    testImplementation 'org.assertj:assertj-core-java8:1.0.0m1'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+  withSourcesJar()
+  withJavadocJar()
+}
+
+// Shut up Java 8 doclint warnings for javadoc
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId    = 'io.github.mschout'
+            artifactId = 'afilias-rtk-addon'
+            version    = '0.6.15'
+
+            from components.java
+
+            pom {
+                name = "${groupId}:${artifactId}"
+                description = 'Fork of Afilias RTK Addon for EPP RTK'
+                url = 'https://github.com/mschout/afilias-rtk-addon'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 1.1'
+                        url = 'https://www.apache.org/licenses/LICENSE-1.1'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Michael Schout'
+                        email = 'schoutm@gmail.com'
+                        organizationUrl = 'https://github.com/mscnout'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/mschout/afilias-rtk-addon.git'
+                    developerConnection = 'scm:git:ssh://github.com:mschout/afilias-rtk-addon.git'
+                    url = 'https://github.com/mschout/afilias-rtk-addon/tree/master'
+                }
+            }
+        }
+    }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            username = System.getenv("OSSRH_USERNAME") ?: 'credentials'
+            password = System.getenv("OSSRH_PASSWORD") ?: 'credentials'
+        }
+    }
+}
