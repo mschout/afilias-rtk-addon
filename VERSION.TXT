@@ -1,0 +1,172 @@
+Copyright (c) 2001-2008 Afilias Limited. All rights reserved.
+
+
+Afilias RTK Add-on Java Versions
+================================
+afilias-rtk-addon-0.6.15 - Apr 19, 2018
++ Bug fixes
+
+afilias-rtk-addon-0.6.14 - Apr 6, 2018
++ Added Policy Delete and Organization extension
++ policy-1.0.xsd
++ orgext-1.0.xsd
++ Added the following parameters to AuExtensionSessionExample: registrantIdType, eligibilityIdType, registrantCurrentExpiryDate, registrantTransferPeriod
+
+afilias-rtk-addon-0.6.13 - Jan 20, 2018
++ Added Domain Sync and AU extension
++ domainSync-1.0.xsd
++ auext-1.3.xsd
+
+afilias-rtk-addon-0.6.12 - May 11, 2016
++ fee-0.8.xsd
++ Fee extension example uses fee-0.8.xsd instead of fee-0.7.xsd
+
+afilias-rtk-addon-0.6.11 - Feb 27, 2015
++ Added Fee extensions 
++ fee-0.7.xsd
+- Removed Price extensions
+
+afilias-rtk-addon-0.6.10 - Feb 2, 2015
++ Added supplementalData-1.0.xsd
+
+afilias-rtk-addon-0.6.9 - Sep 16, 2014
++ Added Intelligent Directory Integration extension
+
+afilias-rtk-addon-0.6.7 - Sep 3, 2013
++ Added Trademark Clearing House extensions
+
+afilias-rtk-addon-0.6.6 - Sep 19, 2012
++ Added README.post for supplemental data extension
+
+afilias-rtk-addon-0.6.5 - May 17, 2012
++ Modified README.pro to include length
+  values for json string components
+
+afilias-rtk-addon-0.6.4 - Feb 6, 2012
++ Added supplemental data extension to contacts commands
++ supplementalData-1.0.xsd
+
+afilias-rtk-addon-0.6.3 - August 5, 2011
++ Added classes for association contact 
+
+afilias-rtk-addon-0.6.2 - July 22, 2011
++ Updated oxrs-1.1.xsd and ipr-1.1.xsd
+
+afilias-rtk-addon-0.6.1 - June 1, 2011
++ Updated oxrs xsd file for .xxx to remove phase
+
+liberty-rtk-addon-0.5.3 - Jan 17, 2011
++ Added .MOBI xsd
++ Updated IDN xsd (IDN script can be modified)
++ Updated IPR xsd (IPR can be modified or removed)
++ Updated OXRS xsd (support <oxrs:phase>)
++ Update Java sources to comply with above XSD
+
+liberty-rtk-addon-0.5.2 - Aug 16, 2010
++ Fix wrong namespace in oxrs-1.0.xsd
+
+liberty-rtk-addon-0.5.1 - July 23, 2009
++ Changed <idn:scriptType> to allow 2..17 characters
+  (originally fixed at 2)
++ Resolve potential NullPointerException when server
+  returns a self enclosed <trademark/> element (XML element
+  with no child elements)
+
+liberty-rtk-addon-0.5.0 - March 14, 2008
++ Added trademark for .ME
+
+liberty-rtk-addon-0.4.9 - Jan 2, 2008
++ Added trademark for .IN
+
+liberty-rtk-addon-0.4.8 - Nov 19, 2007
+ + Added DNS SEC and RGP support
+
+liberty-rtk-addon-0.4.7 - May 18, 2007
+
+ + Added asia and ipr extensions for .asia 
+
+liberty-rtk-addon-0.3.1 - Dec 20, 2003
+
+ + Addition of IDN unspec handling code for the
+   .info registry (only for German script
+   Unicode code point at this time).
+ + Addition of GUI IDN example using Java Swing.
+   Class name is IDNGUIExample and is run via
+   run_example.[sh|bat] as usual.
+ + Addition of the Verisign IDN SDK jar file to
+   the distribution and creation of the
+   com.liberty.rtk.util.VGRSPuny wrapper class
+   for easy punycode manipulation of domain names.
+
+liberty-rtk-addon-0.3.0 - Sept 10, 2003
+
+ + Created RGPRenew extension (and example) for the 
+   .info registry (com.liberty.rtk.addon.RGPRenew).
+ + Created new legacy_src to house the "unspec" addon
+   src to be compiled against 0.3.x Java RTK releases.
+ + New jar file (liberty-rtk-addon-legacy.jar) for
+   those using the 0.3.x line of Java RTKs.
+   The original liberty-rtk-addon.jar file is for users
+   of the 0.7.x and greater lines of Java RTKs (must be
+   at least 0.7.4).  If using the 0.3.x line, 0.3.11 
+   or great is required.
+
+liberty-rtk-addon-0.2.2 - May 5, 2003
+
+ + Fix to DomainProtocol extension to be a little
+   smarter about parsing -- not assuming numerical
+   position of the oxrs:infData node.
+ + Also make it assume a default value of "epp" if
+   the extension is not found as per .org registry
+   policy.
+ + Fix to the xml elements in the oxrs transfer class
+   to prevent xerces from erroring out about namespace
+   stuff
+
+liberty-rtk-addon-0.2.1 - April 16, 2003
+
+ + Added DomainProtocol extension for <domain:info>
+   responses for .org.  The extension tells the
+   registrar in which registry protocol the domain
+   is based to see if the OxrsTransfer extension
+   is required to transfer a domain from RRP to EPP.
+   Example for this extension is included.  Note
+   that the extension will not be present if the 
+   protocol is RRP (i.e. EPP is the default).
+
+liberty-rtk-addon-0.2.0 - Mar 27, 2003 (released to PIR)
+
+ + Added OxrsTransfer extension for the transfer
+   of .org domains from RRP-based registrars to
+   EPP-based registrars.  The extension permits 
+   the specification of EPP contacts to be
+   assigned to the domain once the transfer is
+   approved.
+ + Updated the older unspec classes
+   to use the epp02 package tree from the RTK
+
+liberty-rtk-addon-0.1.3 - Oct 23, 2001
+
+ + Changed trademark date data type from Date
+   to String because it's free text in the 
+   registry.
+
+liberty-rtk-addon-0.1.2 - June 22, 2001
+
+ + Fixed bug with Trademark parse in EPP Responses
+ + Turned TLS on in example classes
+
+liberty-rtk-addon-0.1.1 - May 27, 2001
+
+ + Added users guide HTML doc to distribution
+
+liberty-rtk-addon-0.1.1 - May 18, 2001
+
+ + Changed date format for Trademark date from full UTC
+   to yyyy-MM-dd like in Domain Renewals.
+ + Bug fix in package name used for the Java EPP IDLs
+
+liberty-rtk-addon-0.1.0 - May 11, 2001
+
+ + Initial Beta release.
+ + Provides DomainTrademark and TestNumber add-on classes and examples.

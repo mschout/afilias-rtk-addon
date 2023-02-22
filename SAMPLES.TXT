@@ -1,0 +1,57 @@
+
+This is a very brief description of the samples in this extension package:
+
+.info unspec "extensions":
+
+    TestNumberExample
+        Shows how to include the .info certification test number
+        in a request to the server.  Command line only, no GUI.
+        
+    TrademarkExample
+        Shows usage of the trademark extension in domain create,
+        domain info and domain update.  Command line only, no GUI.
+        
+    RGPRenewExample
+        Shows usage of the rgp:renew extension to make an RGP
+        restoration request to the .info registry.  Command line
+        only, no GUI.
+        
+    IDNExample
+        Shows simple usage of the IDN extension for .info.  Command
+        line only, no GUI.
+        
+    IDNGUIExample
+        Shows extensive usage of the IDN extension for .info. Java
+        Swing GUI only, no command line version.
+
+    SupplementalDataExample
+        Shows usage of supplemental data extension
+
+    AssociationContactExample                                   
+        Shows usage of association contact extension
+    
+.org extensions:
+
+    OxrsTransferExample
+        Shows how to include contact handles when requesting a
+        transfer of an RRP-based domain by an EPP-based registrar.
+        Command line only, no GUI.
+        
+    DomainProtocolExample
+        Shows how to determine the protocal base of a .org domain
+        name.  Command line only, no GUI.
+        
+    IDNExample
+        Shows simple usage of the IDN extension for .org.  Command
+        line only, no GUI.
+        
+    IDNGUIExample
+        Shows extensive usage of the IDN extension for .org. Java
+        Swing GUI only, no command line version.
+
+	IDValidationDomainUpdateExample
+        Shows simple update usage example of the Intelligent Directory
+        extension.  Command line only, no GUI.    
+
+    SecDNSExample
+        Shows basic use of the DNSSEC extension for EPP.

@@ -1,0 +1,717 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>Afilias .info and .org EPP RTK Add-On Java API</TITLE>
+</HEAD>
+<BODY text="#000000"
+      bgcolor="#FFFFFF"
+      link="#0000EF"
+      vlink="#55188A"
+      alink="#FF0000">
+
+<H1><font size=10><center>Afilias .info and .org EPP RTK<BR>
+Java Add-on API Documentation</center></font></H1>
+
+<h3><center>Release 0.3.0</center></h3>
+<h3><center>Sept 9, 2003</center></h3>
+
+<h2><center>Created by: Tucows Inc.</center></h2>
+<h2><center>Maintained by: Afilias Limited</center></h2>
+
+<hr>
+
+CVS information:<br>
+$Revision: 1.7 $<br>
+$Date: 2004/01/30 22:02:26 $
+
+<h1>Contents</h1>
+
+<h3><a href="#1.">1. Introduction</a></h3>
+	<blockquote>
+	<a href="#1.1.">1.1 Scope</a><br>
+	</blockquote>
+<h3><a href="#2.">2. RTK Java Add-on Requirements</a></h3>
+<h3><a href="#3.">3. EPP IDL Use in the RTK Java Add-on</a></h3>
+	<blockquote>
+	<a href="#3.1.">3.1 Overview</a><br>
+	<a href="#3.2.">3.2 epp_Unspec</a><br>
+	<a href="#3.3.">3.3 epp_Extension</a><br>
+        </blockquote>
+<h3><a href="#4.">4. Unspec Classes</a></h3>
+	<blockquote>
+	<a href="#4.1.">4.1 com.liberty.rtk.addon.DomainTrademark</a><br>
+		<blockquote>
+		<a href="#4.1.1.">4.1.1 EPP Domain Info With Trademark</a><br>
+		<a href="#4.1.2.">4.1.2 EPP Domain Create With Trademark</a><br>
+		<a href="#4.1.3.">4.1.3 EPP Domain Update With Trademark</a><br>
+		</blockquote>
+	<a href="#4.2.">4.2 com.liberty.rtk.addon.TestNumber</a><br>
+		<blockquote>
+		<a href="#4.2.1.">4.2.1 EPP Domain Check With Test Number</a><br>
+		</blockquote>
+	<a href="#4.3.">4.3 com.liberty.rtk.addon.RGPRenew</a><br>
+		<blockquote>
+		<a href="#4.3.1.">4.3.1 EPP Domain Renew with RGP restore</a><br>
+		</blockquote>
+	</blockquote>
+<h3><a href="#5.">5. Extension Classes</a></h3>
+	<blockquote>
+	<a href="#5.1.">5.1 com.liberty.rtk.extension.epp0705.DomainProtocol</a><br>
+		<blockquote>
+		<a href="#5.1.1.">5.1.1 EPP Domain Info With Trademark</a><br>
+		</blockquote>
+	<a href="#5.2.">5.2 com.liberty.rtk.extension.epp0705.OxrsTransfer</a><br>
+		<blockquote>
+		<a href="#5.2.1.">5.2.1 EPP Domain Transfer With Oxrs Transfer</a><br>
+		</blockquote>
+	</blockquote>
+<h3><a href="#appa">Appendix A: References</a></h3>
+<h3><a href="#appb">Appendix B: Documentation License</a></h3>
+
+<hr>
+
+<a name="1."><H1>1. Introduction</H1></a>
+
+<blockquote>
+
+    This document provides a
+    description of the Extensible Provisioning Protocol (EPP)   RTK Java
+    Add-ons and Extensions for:
+    <ul>
+        <li>Domain Trademark,
+        <li>Test Number,
+        <li>RGP Renew/Restore,
+        <li>Domain Protocol, and
+        <li>Oxrs Transfer.
+    </ul>
+    The descriptions
+    include the requirements needed to use the Registrar Toolkit (RTK)
+    Java Add-on, a description of the EPP IDL (Interface Definition
+    Language) epp_Unspec and epp_Extension interfaces used in the add-on
+    extensions, and descriptions of the add-on and extension classes with 
+    examples.  The document also provides references and referrals for 
+    further details.
+
+    <P>
+
+    <a name="1.1."><H2>1.1. Scope</H2></a>
+
+    <blockquote>
+
+        The .info and .org RTK Java Add-on Documentation is a users guide 
+        for the add-ons and extensions used by those registries.  In this 
+        document, "add-on" will generally refer to the "unspec" implementations
+        for the "02" version of EPP used by the .info registry.  
+        "Extension" will denote the "extension" implementations for the "07"
+        version of EPP used by the .org registry.
+        <p>
+        This document provides a description and usage information for the 
+        unspecs and extensions used by the .info and .org registry systems.
+        The examples provided should be used as a guide to using the classes 
+        described in the Javadocs.
+        <p>
+        <b>Please note that this document describes the add-ons and extensions
+        used by the 0.7.4 and greater releases of the EPP Java RTK (for both
+        .info and .org).  If you are using the 0.3.x line of RTKs for the 
+        .info registry, then you should be reading the document found 
+        <a href="legacy/liberty-rtk-addon-user-guide.html">here</a>.</b>
+
+    </blockquote>
+
+</blockquote>
+
+<P><HR>
+
+<a name="2."><H1>2. RTK Java Add-on Requirements</H1></a>
+
+<blockquote>
+
+The only requirement that
+the RTK Add-on has is the RTK itself (release 0.7.4 or greater).
+The RTK has requirements of
+its own.  For more details please read README files on the
+add-on package and in the RTK.
+
+</blockquote>
+
+<HR>
+
+<a name="3."><H1>3. EPP IDL Use in the RTK Java Add-on</H1></a>
+
+<blockquote>
+
+    <a name="3.1."><H2>3.1 Overview</H2></a>
+
+    <blockquote>
+
+        The EPP RTK makes use of
+        a set of IDLs that define the data requirements of the RTK.  They
+        also specify various interfaces to guide developers in developing
+        RTKs in other languages.
+        <P>
+
+        The RTK Add-on makes use of the IDL's epp_Unspec (EPP 02) and 
+        epp_Extension (EPP 07) interface described below.
+
+    </blockquote>
+
+    <a name="3.2."><H2>3.2. epp_Unspec</H2></a>
+
+    <blockquote>
+
+        The term &quot;unspec&quot;
+        refers to the EPP 02 XML schemas.  It defines a placeholder for
+        unspecified data for registry-specific extensions to EPP (release 02).
+
+        <P>
+
+        The unspec IDL interface
+        describes how an &quot;unspec&quot; object should behave.  It defines
+        two methods:  toXML() and fromXML().  These allow an unspec object to
+        translate itself to and from XML, respectively.
+
+        <P>
+
+        Unspec data can either be
+        sent to or received from an EPP registry.  If used in a request to
+        the registry, an unspec object can be directly assigned to
+        m_cmd.m_unspec data member of the request data (accessor methods are
+        available).  If the registrar is
+        expecting unspec data back from a command, then it may be retrieved
+        from the m_rsp.m_unspec_string data member of the response (again,
+        accessors are available).
+
+    </blockquote>
+
+    <a name="3.3."><H2>3.3. epp_Extension</H2></a>
+
+    <blockquote>
+
+        Extensions are the mechanism used by EPP release 07 to allow users of
+        the protocol to attach additional xml data to EPP messages (both 
+        request and response).  Unlike the previous "unspec", EPP 07 permits
+        multiple extensions to be attached to EPP messages. Consequently the 
+        epp_Command class now accepts an array of epp_Extensions.
+        <p>
+        In all other respects, epp_Extension is identical to epp_Unspec in
+        EPP 07.
+
+    </blockquote>
+
+</blockquote>
+
+<P><HR>
+
+<a name="4."><H1>4. Unspec Classes</H1></a>
+
+<blockquote>
+
+This section describes
+the unspec classes for the .info registry.  You can always refer to
+Javadocs for more information regarding these classes.  Please also
+refer to RTK Javadocs for more information on the classes with which
+the add-ons are used.
+
+<a name="4.1."><H2>4.1. com.liberty.rtk.addon.DomainTrademark</H2></a>
+
+<blockquote>
+
+During the Sunrise period
+of the .info registry, trademark information for a domain will be
+required.  The registry will allow the following commands to be
+performed with trademark information: create, info and update. 
+During the Sunrise period, the trademark information must be supplied
+in the Domain Create action.  The trademark information may be
+modified in a Domain Update, but it cannot be removed.  A Domain Info
+will return the trademark information in the response.
+
+<p>
+
+Domain trademark contains the following accessor methods:
+
+<UL>
+	<LI><B>set/getName(String)</B>
+            The is the official name of the trademark.
+	<LI><B>set/getDate(java.util.Date)<br>
+               setDate(String)<br>
+               getDateAsString()</B>
+	    The is the date of the trademark registration.  The value
+            is a String, but for backward compatibility, methods for Date
+            format are still available.  Plain "getDate()" will return
+            null if the date cannot be converted from a String to a Date
+            object.
+	<LI><B>set/getCountry(String)</B>
+            This is the country where the trademark is registered.  The value
+	    must be a valid two-character ISO country code.
+	<LI><B>set/getNumber(String)</B>
+	    This is the trademark's registration number.  There is no imposed
+	    format on this value.
+</UL>
+
+<P>
+
+When trademark is required, all four fields are mandatory.
+
+<P>
+
+The following are examples of usage of the DomainTrademark class.  Please
+see the EPP RTK documentation for more information regarding the EPP
+action described.
+
+<a name="4.1.1."><H3>4.1.1. EPP Domain Info with Trademark</H3></a>
+
+<blockquote>
+<pre>
+epp_DomainInfoReq domain_info_request = new epp_DomainInfoReq();
+command_data = new epp_Command();
+domain_info_request.m_cmd = command_data;
+
+domain_info_request.m_name = "domain.info";
+
+EPPDomainInfo domain_info = new EPPDomainInfo();
+domain_info.setRequestData(domain_info_request);
+
+domain_info = (EPPDomainInfo) epp_client.processAction(domain_info);
+
+epp_DomainInfoRsp domain_info_response = domain_info.getResponseData();
+epp_Response response = domain_info_response.m_rsp;
+
+if ( response.m_unspec_string != null )
+{
+<blockquote>
+// ***************************
+//
+// Domain Trademark Info
+//
+***************************
+DomainTrademark trademark = new DomainTrademark();
+trademark.fromXML(response.m_unspec_string);
+String tm_name = trademark.getName();
+// The getDate() method attempts to convert the String
+// date into a Date object.  This method is deprecated
+// and is still provided for backward compatibility.
+// getDateAsString() should be used instead.
+// Date tm_date = trademark.getDate();
+String tm_date = trademark.getDateAsString();
+String tm_country = trademark.getCountry();
+String tm_number = trademark.getNumber();
+</blockquote>
+}
+</pre>
+</blockquote>
+
+<a name="4.1.2."><H3>4.1.2. EPP Domain Create with Trademark</H3></a>
+
+<blockquote>
+<pre>
+epp_DomainCreateReq domain_create_request = new epp_DomainCreateReq(); 
+
+command_data = new epp_Command(); command_data.m_client_trid = client_trid;
+domain_create_request.m_cmd = command_data; 
+
+domain_create_request.m_name = "domain.info"; 
+
+// Code for auth info, contacts, and nameservers
+// not included in this example. 
+
+// ***************************
+//
+// Domain Trademark Data 
+//
+// *************************** 
+
+DomainTrademark trademark_info = new DomainTrademark();
+trademark_info.setName("ACME Kitchen Products");
+trademark_info.setDate("1999-11-25"); 
+trademark_info.setCountry("CA");
+trademark_info.setNumber("23985-3985-239899-22"); 
+
+// Now, set the m_cmd.m_unspec value to the trademark
+// object. The RTK will take care of getting XML from it.
+domain_create_request.m_cmd.m_unspec = trademark_info; 
+
+EPPDomainCreate domain_create = new EPPDomainCreate();
+domain_create.setRequestData(domain_create_request); 
+
+domain_create = (EPPDomainCreate) epp_client.processAction(domain_create); 
+
+</pre>
+</blockquote>
+
+<a name="4.1.3."><H3>4.1.3. EPP Domain Update with Trademark</H3></a>
+
+<blockquote>
+<pre>
+epp_DomainUpdateReq domain_update_request = new epp_DomainUpdateReq(); 
+
+command_data = new epp_Command();
+command_data.m_client_trid = client_trid;
+domain_update_request.m_cmd = command_data; 
+
+domain_update_request.m_name = "domain.info"; 
+
+// *************************** 
+//
+// Domain Trademark Info
+//
+// *************************** 
+
+DomainTrademark trademark_info = new DomainTrademark();
+trademark_info.setName("ACME Kitchen Supplies");
+
+// New trademark information.
+trademark_info.setDate("2000-01-01");
+trademark_info.setCountry("US");
+trademark_info.setNumber("22-04895-2399029-522"); 
+
+// If there is no change to the trademark data, then
+// it can be omitted from the update request.
+domain_update_request.m_cmd.m_unspec = trademark_info; 
+
+EPPDomainUpdate domain_update = new EPPDomainUpdate();
+domain_update.setRequestData(domain_update_request); 
+
+domain_update = (EPPDomainUpdate) epp_client.processAction(domain_update); 
+</pre>
+</blockquote>
+
+</blockquote>
+
+<a name="4.2."><H2>4.2. com.liberty.rtk.addon.TestNumber</H2></a>
+
+<blockquote>
+
+    This class is used to
+    exchange Registrar Certification Test Number data with the Afilias
+    .info Registry.  The data should only be used in the OT&amp;E
+    environment and only during a registrar cerfication test.  The value
+    of the test number for a command should match the section number in
+    the certification test document.
+
+    <P>
+
+    Test Number contains the following accessor methods:
+
+    <UL>
+	    <LI><B>set/getTestNum(String)</B>
+	     This is the certification test number (eg. &quot;2.2.16&quot;). The
+	    &quot;get&quot; is not really used, but is included just because
+	    sets and gets go in pairs.
+    </UL>
+
+    The following are examples of usage of the TestNumber class.  Please
+    see the EPP RTK documentation for more information regarding the EPP
+    action described.
+
+    <a name="4.2.1."><H3>4.2.1. EPP Domain Check with TestNumber</H3></a>
+
+    <blockquote>
+        <pre>
+epp_DomainCheckReq domain_check_request = new epp_DomainCheckReq(); 
+
+command_data = new epp_Command();
+command_data.m_client_trid = client_trid;
+domain_check_request.m_cmd = command_data; 
+
+List domain_list = (List)new ArrayList();
+domain_list.add("domain.info");
+domain_check_request.m_names = EPPXMLBase.convertListToStringArray(domain_list); 
+
+// ***************************
+//
+// Request testnum info
+//
+// ***************************
+
+TestNumber testnum_info = new TestNumber();
+testnum_info.setTestNum("2.6.11"); 
+
+domain_check_request.m_cmd.m_unspec = testnum_info; 
+
+EPPDomainCheck domain_check = new EPPDomainCheck();
+domain_check.setRequestData(domain_check_request); 
+
+domain_check = (EPPDomainCheck) epp_client.processAction(domain_check);
+
+        </pre>
+    </blockquote>
+
+</blockquote>
+
+<a name="4.3."><H2>4.3. com.liberty.rtk.addon.RGPRenew</H2></a>
+
+<blockquote>
+
+    To send a redemption grace period restore request to the .info registry,
+    this add-on is used.  This is a simple unspec which requires no
+    instance data to use.  Simply instantiating it and adding it to the
+    request is enough to use it.
+
+    <a name="4.3.1."><H3>4.3.1. EPP Domain Renew with RGPRenew</H3></a>
+
+    <blockquote>
+        <pre>
+
+epp_DomainRenewReq domain_renew_request = new epp_DomainRenewReq();
+
+command_data = new epp_Command();
+command_data.m_client_trid = client_trid;
+domain_renew_request.m_cmd = command_data;
+
+domain_renew_request.m_name = domain_name;
+
+// ********************************
+//
+// Domain RGP Renew/Restore Unspec
+//
+// ********************************
+domain_renew_request.getCmd().setUnspec(new RGPRenew());
+
+EPPDomainRenew domain_renew = new EPPDomainRenew();
+domain_renew.setRequestData(domain_renew_request);
+
+domain_renew = (EPPDomainRenew) epp_client.processAction(domain_renew);
+
+
+        </pre>
+    </blockquote>
+
+</blockquote>
+
+</blockquote>
+
+<a name="5."><H1>5. Extension Classes</H1></a>
+
+<blockquote>
+
+    This section describes
+    the extension classes used by the .org registry.  You can always refer to
+    Javadocs for more information regarding these classes.  Please also
+    refer to RTK Javadocs for more information on the classes with which
+    the extensions are used.
+
+    <a name="5.1."><H2>5.1. com.liberty.rtk.extension.epp0705.DomainProtocol</H2></a>
+
+    <blockquote>
+
+        The Domain Protocol extension is used by the .org registry
+        system to indicate to the registrar in which protocol a
+        domain resides.  The registry server includes this extension
+        in the response to a <font face="courier">&lt;domain:info&gt;</font> operation.
+        <p>
+        In the .org registry, domains are based in either RRP or EPP
+        protocol.  This information should be used by the registrar
+        to dertermine if the OxrsTransfer extension is needed in
+        the request of a domain transfer.
+        <p>
+        The absense of the extension from the server, indicates that
+        the domain is based in EPP.
+
+        <a name="5.1.1."><H3>5.1.1. EPP Domain Info with DomainProtocol</H3></a>
+
+        <blockquote>
+            <pre>
+epp_DomainInfoReq domain_info_request = new epp_DomainInfoReq();
+
+command_data = new epp_Command();
+command_data.setClientTrid(client_trid);
+domain_info_request.setCmd(command_data);
+
+domain_info_request.setName(org_rrp_domain);
+
+EPPDomainInfo domain_info = new EPPDomainInfo();
+domain_info.setRequestData(domain_info_request);
+
+domain_info = (EPPDomainInfo) epp_client.processAction(domain_info);
+
+epp_DomainInfoRsp domain_info_response = domain_info.getResponseData();
+epp_Response response = domain_info_response.m_rsp;
+epp_Result[] results = response.m_results;
+<i>
+if ( response.getExtensionStrings() != null &&
+     response.getExtensionStrings().length > 0 )
+{
+    DomainProtocol protocol = new DomainProtocol();
+    protocol.fromXML(response.getExtensionStrings()[0]);
+    System.out.println("***Domain Protocol ["+protocol.getProtocol()+"]");
+}
+</i>
+            </pre>
+        </blockquote>
+
+    </blockquote>
+
+    <a name="5.2."><H2>5.2. com.liberty.rtk.extension.epp0705.OxrsTransfer</H2></a>
+
+    <blockquote>
+
+        This extension is used by an EPP-based .org registrar to 
+        supply contacts to a domain being transfered from an RRP-based
+        registrar.
+
+        <a name="5.2.1."><H3>5.2.1. EPP Domain Transfer with OxrsTransfer</H3></a>
+
+        <blockquote>
+            <pre>
+epp_DomainTransferReq domain_transfer_request = new epp_DomainTransferReq();
+
+command_data = new epp_Command();
+command_data.m_client_trid = getClientTrid(epp_client_id);
+domain_transfer_request.m_cmd = command_data;
+
+epp_TransferRequest transfer_request = new epp_TransferRequest();
+transfer_request.m_op = epp_TransferOpType.REQUEST;
+transfer_request.m_auth_info = new epp_AuthInfo(epp_AuthInfoType.PW, null, "tralala");
+domain_transfer_request.m_trans = transfer_request;
+
+domain_transfer_request.m_name = "example.org";
+
+//****************************
+// The OxrsTransfer extension
+//****************************
+<i>
+/*
+ * When transferring a .org domain from an RRP-based to
+ * an EPP-based registrar, the .org registry will require
+ * a set of EPP contacts to replace the placeholder
+ * contacts in place while the domain was in RRP.
+ */
+OxrsTransfer oxrs_transfer = new OxrsTransfer();
+oxrs_transfer.setRegistrant( "CNTCT-100" );
+List domain_contacts = new ArrayList();
+// The .org EPP registry requires one contact of each type.
+domain_contacts.add( new epp_DomainContact( epp_DomainContactType.TECH, "CNTCT-101" ) );
+domain_contacts.add( new epp_DomainContact( epp_DomainContactType.ADMIN, "CNTCT-102" ) );
+domain_contacts.add( new epp_DomainContact( epp_DomainContactType.BILLING, "CNTCT-103" ) );
+oxrs_transfer.setContacts( (epp_DomainContact[]) EPPXMLBase.convertListToArray((new epp_DomainContact()).getClass(), domain_contacts) );
+
+domain_transfer_request.m_cmd.m_extensions = new epp_Extension[1];
+domain_transfer_request.m_cmd.m_extensions[0] = oxrs_transfer;
+</i>
+EPPDomainTransfer domain_transfer = new EPPDomainTransfer();
+domain_transfer.setRequestData(domain_transfer_request);
+
+domain_transfer = (EPPDomainTransfer) epp_client.processAction(domain_transfer);
+
+            </pre>
+        </blockquote>
+
+    </blockquote>
+
+</blockquote>
+
+</blockquote>
+
+</blockquote>
+
+<hr>
+
+<H1><a name="appa">Appendix A: References<a></H1>
+
+<blockquote>
+
+<H2>EPP RTK provided on Sourceforge</H2>
+
+<blockquote>
+
+EPP RTK: <A HREF="http://epp-rtk.sf.net">http://epp-rtk.sf.net</A>
+
+<P>
+
+EPP RTK Java API Documentation: included in the EPP RTK package.
+
+</blockquote>
+
+<H2>Java Add-on and Extension Examples provided in the Afilias RTK Add-on</H2>
+
+<blockquote>
+
+Found in <a href="../src/com/liberty/rtk/addon/example">java/src/com/liberty/rtk/addon/example</a>:
+
+<ul>
+    <li>TrademarkExample.java
+    <li>TestNumberExample.java
+    <li>RGPRenewExample.java
+</ul>
+
+Found in <a href="../src/com/liberty/rtk/extension/epp0705/example">java/src/com/liberty/rtk/extension/epp0705/example</a>:
+
+<ul>
+    <li>DomainProtocolExample.java
+    <li>OxrsTransferExample.java
+</ul>
+
+</blockquote>
+
+<H2>Source Code provided in the Afilias RTK Add-on</H2>
+
+<blockquote>
+
+Ant Build Files, directory: java/etc
+
+<P>
+
+Source tree, directory: <a href="../src">java/src</a>
+
+</blockquote>
+
+<H2>Documentation provided in the Afilias RTK Add-on</H2>
+
+<blockquote>
+
+Javadocs, directory: <a href="../doc/api-doc">java/doc/api-doc</a>
+
+<P>
+
+Afilias RTK Java Add-on Documentation (this document), directory: <a href="../doc">java/doc</a>
+
+<P>
+
+<a href="../README.TXT">README.TXT</a>, directory: <a href="..">java</a>
+
+</blockquote>
+
+</blockquote>
+
+<hr>
+
+<H1><a name="appb">Appendix B: Documentation License</a></H1>
+
+<blockquote>
+
+OpenContent License (OPL)
+<P>
+Version 1.0, July 14, 1998. 
+<P>
+This document outlines the principles underlying the OpenContent (OC) movement and may be redistributed provided it remains unaltered. For legal purposes, this document is the license under which OpenContent is made available for use. 
+<P>
+The original version of this document may be found at <a href="http://opencontent.org/opl.shtml">http://opencontent.org/opl.shtml</a>
+<P>
+LICENSE 
+<P>
+Terms and Conditions for Copying, Distributing, and Modifying 
+<P>
+Items other than copying, distributing, and modifying the Content with which this license was distributed (such as using, etc.) are outside the scope of this license. 
+<P>
+1. You may copy and distribute exact replicas of the OpenContent (OC) as you receive it, in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice and disclaimer of warranty; keep intact all the notices that refer to this License and to the absence of any warranty; and give any other recipients of the OC a copy of this License along with the OC. You may at your option charge a fee for the media and/or handling involved in creating a unique copy of the OC for use offline, you may at your option offer instructional support for the OC in exchange for a fee, or you may at your option offer warranty in exchange for a fee. You may not charge a fee for the OC itself. You may not charge a fee for the sole service of providing access to and/or use of the OC via a network (e.g. the Internet), whether it be via the world wide web, FTP, or any other method. 
+<P>
+2. You may modify your copy or copies of the OpenContent or any portion of it, thus forming works based on the Content, and distribute such modifications or work under the terms of Section 1 above, provided that you also meet all of these conditions: 
+<blockquote>
+a) You must cause the modified content to carry prominent notices stating that you changed it, the exact nature and content of the changes, and the date of any change. 
+<P>
+b) You must cause any work that you distribute or publish, that in whole or in part contains or is derived from the OC or any part thereof, to be licensed as a whole at no charge to all third parties under the terms of this License, unless otherwise permitted under applicable Fair Use law. 
+</blockquote>
+These requirements apply to the modified work as a whole. If identifiable sections of that work are not derived from the OC, and can be reasonably considered independent and separate works in themselves, then this License, and its terms, do not apply to those sections when you distribute them as separate works. But when you distribute the same sections as part of a whole which is a work based on the OC, the distribution of the whole must be on the terms of this License, whose permissions for other licensees extend to the entire whole, and thus to each and every part regardless of who wrote it. Exceptions are made to this requirement to release modified works free of charge under this license only in compliance with Fair Use law where applicable. 
+<P>
+3. You are not required to accept this License, since you have not signed it. However, nothing else grants you permission to copy, distribute or modify the OC. These actions are prohibited by law if you do not accept this License. Therefore, by distributing or translating the OC, or by deriving works herefrom, you indicate your acceptance of this License to do so, and all its terms and conditions for copying, distributing or translating the OC. 
+<P>
+NO WARRANTY 
+<P>
+4. BECAUSE THE OPENCONTENT (OC) IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE OC, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE OC "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK OF USE OF THE OC IS WITH YOU. SHOULD THE OC PROVE FAULTY, INACCURATE, OR OTHERWISE UNACCEPTABLE YOU ASSUME THE COST OF ALL NECESSARY REPAIR OR CORRECTION. 
+<P>
+5. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MIRROR AND/OR REDISTRIBUTE THE OC AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE OC, EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+</blockquote>
+</BODY>
+</HTML>
