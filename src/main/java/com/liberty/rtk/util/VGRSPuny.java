@@ -28,12 +28,7 @@
 
 package com.liberty.rtk.util;
 
-// This class uses the Verisign IDN SDK for punycode domains.
-// It can be obtained from http://www.verisigninc.com/en_US/products-and-services/domain-name-services/registry-products/idn-sdk/index.xhtml?loc=en_US
-// The Jar is included in the afilias-rtk-addon distribution.
-import com.vgrs.xcode.idna.Idna;
-import com.vgrs.xcode.idna.Punycode;
-import com.vgrs.xcode.common.Unicode;
+import java.net.IDN;
 
 /**
  * Wrapper class for the VGRS IDN DSK's Punycode converter.
@@ -44,31 +39,13 @@ import com.vgrs.xcode.common.Unicode;
 **/
 public class VGRSPuny
 {
+    // TODO - remove this really no reason to even have this anymore, just use java.net.IDN directly.
 
-    public static String easyEncodeDomain(String utf8Domain) throws com.vgrs.xcode.util.XcodeException {
-
-        System.out.println("The UTF8 domain is: "+utf8Domain);
-        String punyDomain;
-        Idna idna = new Idna(new Punycode(), true, true);
-        char[] theChars = utf8Domain.toCharArray();
-        int[] theInts = Unicode.encode(theChars);
-        
-        punyDomain = new String(idna.domainToAscii(theInts));
-        System.out.println("The puny domain is: "+punyDomain);
-        return punyDomain;
+    public static String easyEncodeDomain(String utf8Domain) {
+        return IDN.toASCII(utf8Domain);
     }
 
-    public static String easyDecodeDomain(String punyDomain) throws com.vgrs.xcode.util.XcodeException {
-
-        System.out.println("The punycode domain is: "+punyDomain);
-        String utf8Domain;
-        Idna idna = new Idna(new Punycode(), true, true);
-        char[] theChars = punyDomain.toCharArray();
-        int[] theInts = idna.domainToUnicode(theChars);
-        
-        utf8Domain = new String(Unicode.decode(theInts));
-        System.out.println("The utf8 domain is: "+utf8Domain);
-        return utf8Domain;
+    public static String easyDecodeDomain(String punyDomain) {
+        return IDN.toUnicode(punyDomain);
     }
-
 }
